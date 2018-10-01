@@ -9,7 +9,7 @@ Created on Sun Sep 30 18:23:12 2018
 import ACOR
 import Utils
 
-use_log = True # Change this flag to use logarithmic version
+use_log = False # Change this flag to use logarithmic version
 a = ACOR.Acor('ContinuoLibre', use_log)
 u = Utils.Utils()
 final_results = a.mainLoop()
@@ -38,8 +38,11 @@ if (plot):
     best_c4 = Utils.exp_list(a.best_c4) if use_log else a.best_c4
     best_c5 = Utils.exp_list(a.best_c5) if use_log else a.best_c5
     best_cost = a.best_cost
+    output_dir = 'ContinuoLibre/Comun/'
+    if (use_log):
+        output_dir = 'ContinuoLibre/Logaritmico/'
     plot_utils = Utils.PlotingUtils([best_r1, best_r2, best_r3, best_c4,
-                                     best_c5, best_cost])
+                                     best_c5, best_cost], output_dir)
     plot_utils.plot_cost_and_vars()
     plot_utils.generate_png_files()
     

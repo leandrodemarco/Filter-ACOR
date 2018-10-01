@@ -208,7 +208,7 @@ class PlotingUtils:
         self.c5_filename = self.output_dir_path + 'C5.txt'
         self.cost_filename = self.output_dir_path + 'COST.txt'
         
-        self.full_fig_filename = self.output_dir_path + 'cost-and-vars.png'
+        self.full_fig_filename = self.output_dir_path + 'cc-full.png'
         self.cost_fig_filename = self.output_dir_path + 'cc-costo.png'
         self.r1_fig_filename = self.output_dir_path + 'cc-r1.png'
         self.r2_fig_filename = self.output_dir_path + 'cc-r2.png'
@@ -257,8 +257,9 @@ class PlotingUtils:
         plt.plot(range(1, max_iterations+1), self.best_cost)
         plt.ylabel('Costo')
         
-        plt.savefig(self.cost_fig_filename)
-        
+        print self.cost_fig_filename
+        plt.savefig(self.full_fig_filename)
+        plt.close()
         #plt.show()
         
         fr1 = open(self.r1_filename, 'w+')
