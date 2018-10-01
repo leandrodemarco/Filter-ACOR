@@ -92,6 +92,9 @@ class Utils:
         self.cap_min, self.cap_max = self.cap_vals[0], self.cap_vals[-1]
         self.res_min, self.res_max = self.res_vals[0], self.res_vals[-1]
         
+        # Holds best 5 values from exhaustive solution w.r.t Sens
+        self.best_r1_sens = [11000., 3600., 36000., 12000., 3300.]
+        
     def _setup_objective_values(self):
         self.obj_g = 3.0
         self.obj_wp = 1000*2*math.pi
