@@ -133,7 +133,7 @@ class Acor:
                     if (self.alg_variant == 'DiscretoPuro'):
                         comp_val = self._calc_comp_val_discrete(s, sigma, i, p)
                         new_population[t][i] = comp_val
-                    elif (self.alg_variant == 'ContinuoLibre'):
+                    else:
                         # Select Gaussian Kernel
                         l = Utils.wheel_selection(p)
                         # Generate Gaussian Random Variable

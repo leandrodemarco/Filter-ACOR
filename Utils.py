@@ -13,6 +13,8 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+from bisect import bisect_left
+from itertools import product
 
 """
     Module helper functions
@@ -95,6 +97,10 @@ class Utils:
         # Holds best 5 values from exhaustive solution w.r.t Sens
         self.best_r1_sens = [11000., 3600., 36000., 12000., 3300.]
         
+    """
+        ACOR SETUP
+    """
+        
     def _setup_objective_values(self):
         self.obj_g = 3.0
         self.obj_wp = 1000*2*math.pi
@@ -123,6 +129,10 @@ class Utils:
         Functions for getting information about a given assignment 
         (r1, r2, r3, c4, c5)
     """    
+    def get_sol_info_grouped(self, grouped_solution):
+        r1, r2, r3, c4, c5 = grouped_solution
+        return self.get_sol_info(r1, r2, r3, c4, c5)
+    
     def get_sol_info(self, r1, r2, r3, c4, c5):
         a = r1/r2
         b = r1/r3
@@ -145,6 +155,10 @@ class Utils:
         q_ok = q < self.q_max and q > self.q_min
         
         return g_ok and wp_ok and q_ok
+    
+    def is_sol_grouped(self, grouped_solution):
+        r1, r2, r3, c4, c5 = grouped_solution
+        return self.is_sol(r1, r2, r3, c4, c5)
 
     def is_sol(self, r1, r2, r3, c4, c5):
         """
@@ -198,8 +212,40 @@ class Utils:
             
             return sens_cost + g_cost + wp_cost + q_cost
         else:
-            # Heavily penalize configurations that are not in the specified range
+            # Heavily penalize configurations that do not lie in range
             return 1.0e11
+        
+    """
+        Neighbouring
+    """
+    def find_discrete_neighbour_components(self, comp_val, is_resistor):
+        """
+            Given a component (resistor or capacitor) value, returns a list
+            holding the closest admisible values according to the E industrial
+            series. List may have 1 element (if comp_val is lower than lowest
+            admisible value or greater than highest one) or 2 elements (any
+            other case where comp_val lies between two admisible values)
+        """
+        target_arr = self.res_vals if is_resistor else self.cap_vals
+        idx = bisect_left(target_arr, comp_val)
+        if (idx == 0):
+            return [target_arr[0]]
+        if (idx == len(target_arr)):
+            return [target_arr[-1]]
+        
+        return [target_arr[idx-1], target_arr[idx]]
+    
+    def fetch_neighbour_solutions(self, R1, r2, r3, c4, c5):
+        solutions = []
+        r2_cands = self.find_discrete_neighbour_components(r2, True)
+        r3_cands = self.find_discrete_neighbour_components(r3, True)
+        c4_cands = self.find_discrete_neighbour_components(c4, False)
+        c5_cands = self.find_discrete_neighbour_components(c5, False)
+        cand_solutions = product([R1], r2_cands, r3_cands, c4_cands, c5_cands)
+        for cand_sol in cand_solutions:
+            if self.is_sol_grouped(cand_sol):
+                solutions.append(list(cand_sol))
+        return solutions
         
 class PlotingUtils:
     def __init__(self, bests_arr, output_dir = None):
@@ -278,14 +324,13 @@ class PlotingUtils:
             c4 = self.best_c4[i]
             c5 = self.best_c5[i]
             costo = self.best_cost[i]
-            #it_str = "%3d %7.4f %7.4f %7.4f %9.4e %9.4e %9.4e\n" % (i,r1,r2,r3,c4,c5,costo)
             fr1.write("%3d,%7.4f\n" % (i,r1))
             fr2.write("%3d,%7.4f\n" % (i,r2))
             fr3.write("%3d,%7.4f\n" % (i,r3))
             fc4.write("%3d,%9.4e\n" % (i,c4))
             fc5.write("%3d,%9.4e\n" % (i,c5))
             fcost.write("%3d,%9.4e\n" % (i,costo))
-            #print(it_str)
+        
         fr1.close()
         fr2.close()
         fr3.close()
@@ -387,7 +432,3 @@ class PlotingUtils:
         plt.plot(range(0, max(x)+1), y)
         plt.savefig(self.c5_fig_filename)
         plt.close()
-
-        
-        
-    
