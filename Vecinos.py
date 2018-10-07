@@ -10,19 +10,28 @@ import ACOR
 import Utils
 
 use_log = True # Change this flag to use logarithmic version
+best_r1_only = False
 a = ACOR.Acor('Vecinos', use_log)
 u = Utils.Utils()
 
-best_r1 = u.best_r1_sens
-for R1 in best_r1:
-    final_results = a.mainLoop(R1)
-    best_sol = final_results[:-1]
-    cost = final_results[-1]
-    if (use_log):
-        best_sol = Utils.exp_list(best_sol)
-    r2, r3, c4, c5 = best_sol[0], best_sol[1], best_sol[2], best_sol[3]
-    solutions = u.fetch_neighbour_solutions(R1, r2, r3, c4, c5)
-    for sol in solutions:
-        sens = u.get_sol_info_grouped(sol)[0]
-        print sol, sens
+max_iters_per_r1 = 1 # Change it to run more ACOR iterations for each R1
 
+sols = []
+r1_vals = u.best_r1_sens if best_r1_only else u.res_vals
+for R1 in r1_vals:
+    for i in range(0, max_iters_per_r1):
+        print 'Running iter %i for R1 = %i' % (i, R1)
+        final_results = a.mainLoop(R1)
+        best_sol = final_results[:-1]
+        cost = final_results[-1]
+        if (use_log):
+            best_sol = Utils.exp_list(best_sol)
+        r2, r3, c4, c5 = best_sol[0], best_sol[1], best_sol[2], best_sol[3]
+        curr_sols = u.fetch_neighbour_solutions(R1, r2, r3, c4, c5, True)
+        for sol in curr_sols:
+            if not sol in sols:
+                sols.append(sol)
+
+
+print sols
+print 'Hay %i soluciones' % len(sols)

@@ -9,12 +9,14 @@ Created on Sun Sep 30 22:32:46 2018
 import ACOR
 import Utils
 
-use_log = False # Change this flag to use logarithmic version
+use_log = True # Change this flag to use logarithmic version
+best_r1_only = False
 a = ACOR.Acor('ContinuoFijo', use_log)
 u = Utils.Utils()
 
-best_r1 = u.best_r1_sens
-for R1 in best_r1:
+r1_vals = u.best_r1_sens if best_r1_only else u.res_vals
+for R1 in r1_vals:
+    print R1
     final_results = a.mainLoop(R1)
     best_sol = final_results[:-1]
     cost = final_results[-1]

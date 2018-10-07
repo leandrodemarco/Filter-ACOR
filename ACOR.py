@@ -12,7 +12,6 @@ import math
 import Utils
 
 alg_variants = ['ContinuoLibre', 'ContinuoFijo', 'Vecinos', 'DiscretoPuro']
-uses_log = False
 
 class Acor:
     def __init__(self, alg_variant, uses_log):

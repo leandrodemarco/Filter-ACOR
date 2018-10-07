@@ -92,7 +92,7 @@ class Utils:
         self.log_cap_vals = map(log_fun, self.cap_vals)
         
         self.cap_min, self.cap_max = self.cap_vals[0], self.cap_vals[-1]
-        self.res_min, self.res_max = self.res_vals[0], self.res_vals[-1]
+        self.res_min, self.res_max = self.res_vals[0]-1, self.res_vals[-1]+1
         
         # Holds best 5 values from exhaustive solution w.r.t Sens
         self.best_r1_sens = [11000., 3600., 36000., 12000., 3300.]
@@ -179,6 +179,7 @@ class Utils:
         return 100 * abs(q - self.obj_q) / self.obj_q
     
     def cost(self, assignment, use_log = False, fixed_R1 = None):
+        #print assignment
         if (use_log):
             # assignment holds the logarithms of the components not their
             # proper value
@@ -218,7 +219,8 @@ class Utils:
     """
         Neighbouring
     """
-    def find_discrete_neighbour_components(self, comp_val, is_resistor):
+    def find_discrete_neighbour_components(self, comp_val, is_resistor,
+                                           find_2 = False):
         """
             Given a component (resistor or capacitor) value, returns a list
             holding the closest admisible values according to the E industrial
@@ -229,21 +231,38 @@ class Utils:
         target_arr = self.res_vals if is_resistor else self.cap_vals
         idx = bisect_left(target_arr, comp_val)
         if (idx == 0):
-            return [target_arr[0]]
+            if not find_2:
+                return [target_arr[0]]
+            else:
+                return [target_arr[0], target_arr[1]]
         if (idx == len(target_arr)):
-            return [target_arr[-1]]
+            if not find_2:
+                return [target_arr[-1]]
+            else:
+                return [target_arr[-1], target_arr[-2]]
         
-        return [target_arr[idx-1], target_arr[idx]]
+        if not find_2:
+            return [target_arr[idx-1], target_arr[idx]]
+        else:
+            lower = [target_arr[idx-1]]
+            if (idx > 1):
+                lower.append(target_arr[idx-2])
+            higher = [target_arr[idx]]
+            if (idx + 1 < len(target_arr)):
+                higher.append(target_arr[idx+1])
+            return lower + higher
     
-    def fetch_neighbour_solutions(self, R1, r2, r3, c4, c5):
+    def fetch_neighbour_solutions(self, R1, r2, r3, c4, c5, find_2 = False):
         solutions = []
-        r2_cands = self.find_discrete_neighbour_components(r2, True)
-        r3_cands = self.find_discrete_neighbour_components(r3, True)
-        c4_cands = self.find_discrete_neighbour_components(c4, False)
-        c5_cands = self.find_discrete_neighbour_components(c5, False)
-        cand_solutions = product([R1], r2_cands, r3_cands, c4_cands, c5_cands)
+        r1_cands = self.find_discrete_neighbour_components(R1, True, find_2)
+        r2_cands = self.find_discrete_neighbour_components(r2, True, find_2)
+        r3_cands = self.find_discrete_neighbour_components(r3, True, find_2)
+        c4_cands = self.find_discrete_neighbour_components(c4, False, find_2)
+        c5_cands = self.find_discrete_neighbour_components(c5, False, find_2)
+        cand_solutions = product(r1_cands, r2_cands, r3_cands, c4_cands, 
+                                 c5_cands)
         for cand_sol in cand_solutions:
-            if self.is_sol_grouped(cand_sol):
+            if self.is_sol_grouped(cand_sol) and not cand_sol in solutions:
                 solutions.append(list(cand_sol))
         return solutions
         
