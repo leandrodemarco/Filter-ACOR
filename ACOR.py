@@ -152,6 +152,8 @@ class Acor:
             best_sol = archive[0][0:num_dim] # Current best solution, NO cost
             self.best_cost[it] = archive[0][num_dim] # Current best cost
             self.best_r1[it] = R1 if R1 != None else best_sol[0]
+            if self.uses_log and R1 != None:
+                self.best_r1[it] = math.log(R1)
             self.best_r2[it] = best_sol[0] if R1 != None else best_sol[1]
             self.best_r3[it] = best_sol[1] if R1 != None else best_sol[2]
             self.best_c4[it] = best_sol[2] if R1 != None else best_sol[3]

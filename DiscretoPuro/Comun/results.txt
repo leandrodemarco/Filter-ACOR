@@ -1,0 +1,72 @@
+No hallo soluciones para R1: 1000.0
+No hallo soluciones para R1: 1100.0
+No hallo soluciones para R1: 1200.0
+No hallo soluciones para R1: 1300.0
+No hallo soluciones para R1: 1500.0
+No hallo soluciones para R1: 1600.0
+No hallo soluciones para R1: 1800.0
+No hallo soluciones para R1: 2000.0
+No hallo soluciones para R1: 2200.0
+No hallo soluciones para R1: 2400.0
+No hallo soluciones para R1: 2700.0
+No hallo soluciones para R1: 3000.0
+No hallo soluciones para R1: 3300.0
+Iteraciones: 13600.0 11000.0 1000.0 1.5e-07 1.5000000000000002e-080.8671586715867158 ErrG: 1.8518518518518452 ErrQ: 1.4822341197624034 ErrWp: 1.16552275442
+No hallo soluciones para R1: 3900.0
+Iteraciones: 14300.0 13000.0 1300.0 1.2e-07 1.2e-080.8573797678275291 ErrG: 0.7751937984496138 ErrQ: 0.8477333035540625 ErrWp: 2.02239941788
+No hallo soluciones para R1: 4700.0
+No hallo soluciones para R1: 5100.0
+No hallo soluciones para R1: 5600.0
+No hallo soluciones para R1: 6200.0
+No hallo soluciones para R1: 6800.0
+No hallo soluciones para R1: 7500.0
+No hallo soluciones para R1: 8200.0
+No hallo soluciones para R1: 9100.0
+No hallo soluciones para R1: 10000.0
+Iteraciones: 611000.0 33000.0 8200.0 2.7000000000000004e-08 3.3e-090.7507598784194528 ErrG: 0.0 ErrQ: 1.129512216499275 ErrWp: 2.49847018618
+Iteraciones: 212000.0 36000.0 1000.0 1.2e-07 5.6e-090.95 ErrG: 0.0 ErrQ: 1.8019493938034241 ErrWp: 2.32558700877
+No hallo soluciones para R1: 13000.0
+No hallo soluciones para R1: 15000.0
+No hallo soluciones para R1: 16000.0
+No hallo soluciones para R1: 18000.0
+No hallo soluciones para R1: 20000.0
+No hallo soluciones para R1: 22000.0
+No hallo soluciones para R1: 24000.0
+Iteraciones: 127000.0 82000.0 1000.0 1.2e-07 2.7e-090.9767541971588464 ErrG: 1.2345679012345585 ErrQ: 0.7694909394823204 ErrWp: 2.3570930667
+No hallo soluciones para R1: 30000.0
+Iteraciones: 533000.0 100000.0 1000.0 1.2e-07 2.2000000000000003e-090.9807748325080106 ErrG: 1.0101010101010093 ErrQ: 0.40016277083650664 ErrWp: 2.04690379044
+No hallo soluciones para R1: 36000.0
+No hallo soluciones para R1: 39000.0
+No hallo soluciones para R1: 43000.0
+No hallo soluciones para R1: 47000.0
+No hallo soluciones para R1: 51000.0
+No hallo soluciones para R1: 56000.0
+No hallo soluciones para R1: 62000.0
+No hallo soluciones para R1: 68000.0
+No hallo soluciones para R1: 75000.0
+No hallo soluciones para R1: 82000.0
+No hallo soluciones para R1: 91000.0
+No hallo soluciones para R1: 100000.0
+No hallo soluciones para R1: 110000.0
+No hallo soluciones para R1: 120000.0
+No hallo soluciones para R1: 130000.0
+No hallo soluciones para R1: 150000.0
+No hallo soluciones para R1: 160000.0
+No hallo soluciones para R1: 180000.0
+No hallo soluciones para R1: 200000.0
+No hallo soluciones para R1: 220000.0
+No hallo soluciones para R1: 240000.0
+No hallo soluciones para R1: 270000.0
+No hallo soluciones para R1: 300000.0
+No hallo soluciones para R1: 330000.0
+No hallo soluciones para R1: 360000.0
+No hallo soluciones para R1: 390000.0
+No hallo soluciones para R1: 430000.0
+No hallo soluciones para R1: 470000.0
+No hallo soluciones para R1: 510000.0
+No hallo soluciones para R1: 560000.0
+No hallo soluciones para R1: 620000.0
+No hallo soluciones para R1: 680000.0
+No hallo soluciones para R1: 750000.0
+No hallo soluciones para R1: 820000.0
+No hallo soluciones para R1: 910000.0

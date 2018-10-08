@@ -9,7 +9,11 @@ Created on Sun Sep 30 18:23:12 2018
 import ACOR
 import Utils
 
-use_log = False # Change this flag to use logarithmic version
+use_log = True # Change this flag to use logarithmic version
+output_dir = ('ContinuoLibre/Logaritmico/' if use_log 
+              else 'ContinuoLibre/Comun/')
+f = open(output_dir + 'results.txt', 'w+')
+
 a = ACOR.Acor('ContinuoLibre', use_log)
 u = Utils.Utils()
 final_results = a.mainLoop()
@@ -19,16 +23,10 @@ cost = final_results[-1]
 if (use_log):
     best_sol = Utils.exp_list(best_sol)
     
-print best_sol, cost
 r1, r2, r3, c4, c5 = best_sol[:5]
-sens, g, q, wp = u.get_sol_info(r1, r2, r3, c4, c5)
-print('Sensibilidad: ' + str(sens) + '\n')
-print('G: ' + str(g) + '\n')
-print('Error G: ' + str(u.err_g(g)) + '%\n')
-print('Omega: ' + str(wp) + '\n')
-print('Error Omega: ' + str(u.err_wp(wp)) + '%\n')
-print('Q: ' + str(q) + '\n')
-print('Error Q: ' + str(u.err_q(q)) + '%\n')
+print u.full_solution_string(r1, r2, r3, c4, c5)
+f.write(u.full_solution_string(r1, r2, r3, c4, c5))
+f.close()
 
 plot = True
 if (plot):
@@ -38,9 +36,6 @@ if (plot):
     best_c4 = Utils.exp_list(a.best_c4) if use_log else a.best_c4
     best_c5 = Utils.exp_list(a.best_c5) if use_log else a.best_c5
     best_cost = a.best_cost
-    output_dir = 'ContinuoLibre/Comun/'
-    if (use_log):
-        output_dir = 'ContinuoLibre/Logaritmico/'
     plot_utils = Utils.PlotingUtils([best_r1, best_r2, best_r3, best_c4,
                                      best_c5, best_cost], output_dir)
     plot_utils.plot_cost_and_vars()

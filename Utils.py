@@ -37,6 +37,10 @@ def wheel_selection(P):
 def exp_list(l):
     return map(lambda x: math.exp(x), l)
 
+def _solution_string(r1, r2, r3, c4, c5):
+    return str(r1) + ' ' + str(r2) + ' ' + str(r3) + ' ' + str(c4) + ' ' \
+           + str(c5)
+
 class Utils:
     def __init__(self, is_scenario1 = False, debug_enabled = False, 
                  g_wgt = 100000., sens_wgt = 1000., light_wgt = 100.):
@@ -217,6 +221,21 @@ class Utils:
             return 1.0e11
         
     """
+        Get sol info as string for printing
+    """
+    def full_solution_string(self, r1, r2, r3, c4, c5):
+        sens, g, Q, wp = self.get_sol_info(r1, r2, r3, c4, c5)
+        sol_str = _solution_string(r1, r2, r3, c4, c5)
+        sol_str += str(sens) + ' ErrG: ' + str(self.err_g(g)) + ' '
+        sol_str += 'ErrQ: ' + str(self.err_q(Q)) + ' ErrWp: ' \
+                     + str(self.err_wp(wp)) + '\n'
+        return sol_str
+    
+    def full_solution_grouped_string(self, solution):
+        r1, r2, r3, c4, c5 = solution
+        return self.full_solution_string(r1, r2, r3, c4, c5)
+        
+    """
         Neighbouring
     """
     def find_discrete_neighbour_components(self, comp_val, is_resistor,
@@ -265,7 +284,7 @@ class Utils:
             if self.is_sol_grouped(cand_sol) and not cand_sol in solutions:
                 solutions.append(list(cand_sol))
         return solutions
-        
+
 class PlotingUtils:
     def __init__(self, bests_arr, output_dir = None):
         self.output_dir_path = output_dir if output_dir != None else ""
