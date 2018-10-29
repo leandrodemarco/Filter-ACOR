@@ -25,7 +25,7 @@ r1_vals = u.best_r1_sens if best_r1_only else u.res_vals
 for R1 in r1_vals:
     for i in range(0, max_iters_per_r1):
         print 'Running iter %i for R1 = %i' % (i, R1)
-        final_results = a.mainLoop(R1)
+        final_results = a.main_loop(R1)
         best_sol = final_results[:-1]
         cost = final_results[-1]
         if (use_log):

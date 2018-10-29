@@ -42,10 +42,10 @@ def _solution_string(r1, r2, r3, c4, c5):
            + str(c5)
 
 class Utils:
-    def __init__(self, is_scenario1 = False, debug_enabled = False, 
-                 g_wgt = 100000., sens_wgt = 1000., light_wgt = 100.):
+    def __init__(self, is_scenario1 = False, g_wgt = 100000., \
+                 sens_wgt = 1000., light_wgt = 100.):
+        
         self.is_scenario1 = is_scenario1
-        self.debug_enabled = debug_enabled
         
         # Weights for G, Sens and light for wp and Q
         self.g_wgt = g_wgt
@@ -226,9 +226,9 @@ class Utils:
     def full_solution_string(self, r1, r2, r3, c4, c5):
         sens, g, Q, wp = self.get_sol_info(r1, r2, r3, c4, c5)
         sol_str = _solution_string(r1, r2, r3, c4, c5)
-        sol_str += str(sens) + ' ErrG: ' + str(self.err_g(g)) + ' '
+        sol_str += ' ErrG: ' + str(self.err_g(g)) + ' '
         sol_str += 'ErrQ: ' + str(self.err_q(Q)) + ' ErrWp: ' \
-                     + str(self.err_wp(wp)) + '\n'
+                     + str(self.err_wp(wp)) + ' Sens: ' + str(sens) +'\n'
         return sol_str
     
     def full_solution_grouped_string(self, solution):

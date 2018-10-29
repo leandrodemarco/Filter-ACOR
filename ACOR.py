@@ -11,10 +11,14 @@ import numpy.matlib as npmatlib
 import math
 import Utils
 
-alg_variants = ['ContinuoLibre', 'ContinuoFijo', 'Vecinos', 'DiscretoPuro']
-
 class Acor:
     def __init__(self, alg_variant, uses_log):
+        """
+            * alg_variant should be one of the following strings: 
+                'ContinuoLibre', 'ContinuoFijo', 'Vecinos', 'DiscretoPuro'
+            * uses_log: boolean indicating whether or not to use logarithm
+                        of components instead of their regular value
+        """
         self.alg_variant = alg_variant
         self.uses_log = uses_log
         self.utils = Utils.Utils()
@@ -22,6 +26,15 @@ class Acor:
         self.num_resistors = 3 if alg_variant == 'ContinuoLibre' else 2
         
     def _calc_comp_val_discrete(self, means, sigmas, comp_idx, p):
+        """
+            This function is used to discretize the value of a filter component
+            from a continuous calculalted value by ACOR when using the
+            variant 'DiscretoPuro'
+            * means: array of means
+            * sigmas: array of standard deviations
+            * comp_idx: index of the component to discretize
+            * p: probabilities array
+        """
         i = comp_idx
         res_vals, cap_vals = self.utils.res_vals, self.utils.cap_vals
         log_res_vals = self.utils.log_res_vals
@@ -73,7 +86,7 @@ class Acor:
                     
         return archive
                 
-    def mainLoop(self, R1 = None):
+    def main_loop(self, R1 = None):
         archive_size = self.utils.archive_size        
         num_dim = self.num_dimensions
         max_iterations = self.utils.max_iterations
@@ -91,8 +104,6 @@ class Acor:
         self.best_c4 = np.zeros([max_iterations])
         self.best_c5 = np.zeros([max_iterations])
         
-                    
-        # Sort it according to cost
         archive = self._initialize_archive(R1)
         archive = archive[archive[:,num_dim].argsort()]
         
@@ -160,7 +171,3 @@ class Acor:
             self.best_c5[it] = best_sol[3] if R1 != None else best_sol[4]
         
         return archive[0] # Best population and cost
-
-
-
-

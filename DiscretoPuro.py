@@ -29,7 +29,7 @@ for R1 in r1_vals:
         print 'Running iter %i for R1: %i' % (i+1, R1)
         if done:
             break
-        best_sol = a.mainLoop(R1)
+        best_sol = a.main_loop(R1)
         r2, r3, c4, c5 = best_sol[0], best_sol[1], best_sol[2], best_sol[3]
         sens = u.get_sol_info(R1, r2, r3, c4, c5)[0]
         isSol = u.is_sol(R1, r2, r3, c4, c5)

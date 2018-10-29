@@ -16,7 +16,7 @@ f = open(output_dir + 'results.txt', 'w+')
 
 a = ACOR.Acor('ContinuoLibre', use_log)
 u = Utils.Utils()
-final_results = a.mainLoop()
+final_results = a.main_loop()
 best_sol = final_results[:-1]
 cost = final_results[-1]
 
@@ -24,7 +24,6 @@ if (use_log):
     best_sol = Utils.exp_list(best_sol)
     
 r1, r2, r3, c4, c5 = best_sol[:5]
-print u.full_solution_string(r1, r2, r3, c4, c5)
 f.write(u.full_solution_string(r1, r2, r3, c4, c5))
 f.close()
 
